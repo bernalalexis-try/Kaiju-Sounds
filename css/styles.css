@@ -78,21 +78,6 @@ h1 {
   margin: 0;
 }
 
-.tools { display: flex; gap: 8px; flex-shrink: 0; }
-
-.chip {
-  border: 1.5px solid var(--line);
-  background: var(--surface);
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: .9rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.chip:disabled { opacity: .45; cursor: default; }
-
 .notice {
   background: var(--surface);
   border: 1.5px dashed var(--line);
@@ -117,7 +102,7 @@ h1 {
 
 .pick {
   flex: 0 0 auto;
-  width: 74px;
+  width: 82px;
   border: 0;
   background: transparent;
   padding: 0;
@@ -151,8 +136,8 @@ h1 {
   text-align: center;
   background: var(--surface);
   border-radius: 7px;
-  padding: 3px 6px;
-  max-width: 74px;
+  padding: 3px 5px;
+  max-width: 82px;
 }
 
 .pick .lb small { display: block; font-weight: 600; color: var(--muted); font-size: .68rem; }

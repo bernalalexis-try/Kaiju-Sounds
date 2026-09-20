@@ -9,8 +9,6 @@
   const $ = (id) => document.getElementById(id);
   const listEl = $('list');
   const pickerEl = $('picker');
-  const stopBtn = $('stopBtn');
-  const modeBtn = $('modeBtn');
 
   const builtIn = KAIJUS.map((k) => ({
     key: k.id,
@@ -28,7 +26,6 @@
 
   let userClips = [];
   let db = null;
-  let mix = readSetting('kaiju-mix') === '1';
   let selected = readSetting('kaiju-selected') || ALL;
   const players = new Map();
 
@@ -119,9 +116,9 @@
     if (!audio) {
       audio = new Audio(clip.src || URL.createObjectURL(clip.blob));
       audio.preload = 'auto';
-      audio.addEventListener('ended', () => { audio.currentTime = 0; updatePad(clip.id); refreshStop(); });
-      audio.addEventListener('pause', () => { updatePad(clip.id); refreshStop(); });
-      audio.addEventListener('play', () => { updatePad(clip.id); refreshStop(); startTicker(); });
+      audio.addEventListener('ended', () => { audio.currentTime = 0; updatePad(clip.id); });
+      audio.addEventListener('pause', () => { updatePad(clip.id); });
+      audio.addEventListener('play', () => { updatePad(clip.id); startTicker(); });
       players.set(clip.id, audio);
     }
     return audio;
@@ -140,31 +137,14 @@
       audio.pause();
       return;
     }
-    if (!mix) {
-      players.forEach((a, otherId) => {
-        if (otherId !== id && !a.paused) {
-          a.pause();
-          a.currentTime = 0;
-          updatePad(otherId);
-        }
-      });
-    }
-    audio.play().catch(() => toast('Este audio no se puede reproducir.'));
-  }
-
-  function stopAll() {
-    players.forEach((a, id) => {
-      a.pause();
-      a.currentTime = 0;
-      updatePad(id);
+    players.forEach((a, otherId) => {
+      if (otherId !== id && !a.paused) {
+        a.pause();
+        a.currentTime = 0;
+        updatePad(otherId);
+      }
     });
-    refreshStop();
-  }
-
-  function refreshStop() {
-    let any = false;
-    players.forEach((a) => { if (!a.paused) any = true; });
-    stopBtn.disabled = !any;
+    audio.play().catch(() => toast('Este audio no se puede reproducir.'));
   }
 
   let ticking = false;
@@ -354,16 +334,6 @@
     e.target.value = '';
     addFiles(files);
   });
-
-  modeBtn.setAttribute('aria-pressed', mix);
-  modeBtn.addEventListener('click', () => {
-    mix = !mix;
-    modeBtn.setAttribute('aria-pressed', mix);
-    writeSetting('kaiju-mix', mix ? '1' : '0');
-    toast(mix ? 'Pueden sonar varios a la vez' : 'Suena uno por vez');
-  });
-
-  stopBtn.addEventListener('click', stopAll);
 
   render();
 
