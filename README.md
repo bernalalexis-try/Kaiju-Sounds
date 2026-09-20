@@ -21,4 +21,5 @@ Minilla (Showa)
 
 Kamacuras (Showa)
 
-<img width="1152" height="717" alt="image" src="https://github.com/user-attachments/assets/9a8c660d-07e7-45d1-8708-4f518c6dd14a" />
+<img width="1062" height="629" alt="image" src="https://github.com/user-attachments/assets/75c3a04c-85ab-451e-a351-b6c6b496b18f" />
+
